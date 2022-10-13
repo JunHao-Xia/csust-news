@@ -13,7 +13,7 @@
  */
 @import '@/uni_modules/uview-ui/theme.scss';
 /* 颜色变量 */
-
+$uni-color-lightBlue:#a0cfff;
 /* 行为相关颜色 */
 $uni-color-primary: #007aff;
 $uni-color-success: #4cd964;
@@ -35,6 +35,8 @@ $uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
 
 /* 边框颜色 */
 $uni-border-color:#c8c7cc;
+$uni-border-audio:#007aff;
+$uni-border-article:#f0ad4e;
 
 /* 尺寸变量 */
 

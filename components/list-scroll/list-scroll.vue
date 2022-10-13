@@ -1,7 +1,7 @@
 <template>
 	<!-- 滑动组件 -->
 	<view class="scorll-container">
-		<scroll-view class="scroll-container__box" scroll-y="true" >
+		<scroll-view class="scroll-container__box" scroll-y="true">
 			<slot></slot>
 		</scroll-view>
 	</view>
@@ -10,8 +10,7 @@
 <script>
 	export default {
 		data() {
-			return {
-				
+			return {	
 			};
 		}
 	}

@@ -9,6 +9,8 @@
 </template>
 
 <script>
+	
+import {mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -17,9 +19,10 @@
 			}
 		},
 		onLoad() {
-
+			this.updateSystemInfo()
 		},
 		methods: {
+			...mapActions('systemInfo',['updateSystemInfo']),
 			//获得顶部导航点击的对应下标  通过top-navbar事件clickTopTab传递至swiper修改对应值
 			clickTopTab(index){
 				this.topNavIndex = index;
