@@ -2,10 +2,10 @@
 	<view class="navList-container">
 		<swiper class="navList-container__swiper" :current = "topNavIndex" @change="change">
 			<swiper-item class="navList-container__swiper-item">
-				<list-scroll><view v-for="item in 100">{{item}}</view></list-scroll>
+				<list-scroll><hot></hot></list-scroll>
 			</swiper-item>
 			<swiper-item>
-				<list-scroll><view v-for="item in 100">{{item}}</view></list-scroll>
+				<list-scroll><hot-video></hot-video></list-scroll>
 			</swiper-item>
 		</swiper>
 	</view>

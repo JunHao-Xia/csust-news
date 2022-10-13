@@ -3,7 +3,7 @@
 		onLaunch: function() {
 			//隐藏自带tabbar
 			uni.hideTabBar()
-			console.log('App Launch')
+			//页面开始获取屏幕宽高以及状态栏高
 		},
 		onShow: function() {
 			console.log('App Show')

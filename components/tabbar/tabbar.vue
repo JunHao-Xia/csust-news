@@ -7,13 +7,13 @@
 		:placeholder="true"
 		:safeAreaInsetBottom="true"
 	>
-	<view class="uTabbar-container__public" @click="open">
+	<view class="uTabbar-container__public" @click="openRelease">
 		<image src="https://cdn.uviewui.com/uview/common/min_button_select.png" mode="aspectFill"></image>
 	</view>
 		<u-tabbar-item text="首页" icon="home"></u-tabbar-item>
 		<u-tabbar-item text="我的" icon="account" ></u-tabbar-item>
 	</u-tabbar>
-	<!-- <my-popup :show="show" @closePopup = "close"></my-popup> -->
+	<release :show ="show" @updateOverlay = "openRelease"></release>
 	</view>
 </template>
 
@@ -22,7 +22,8 @@
 		props:{
 			current:{
 				type:Number,
-				default:0
+				default:0,
+				
 			}
 			
 		},
@@ -30,21 +31,19 @@
 			return {
 				value: 0,
 				list:['index','my'],
-				show:false //控制弹框出现
+				show:false
 			}
 		},
 		methods:{
-			close(){
-				this.show=false
-			},
-			open(){
-				this.show = true
-			},
 			change(e){
 				uni.switchTab({
 					url:`/pages/${this.list[e]}/${this.list[e]}`
 				})
+			},
+			openRelease(){
+				this.show = !this.show;
 			}
+			
 		}
 	}
 </script>
