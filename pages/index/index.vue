@@ -1,6 +1,6 @@
 <template>
 	<view class="home">
-		<top-navbar :swiperIndex="swiperIndex" @clickTopTab="clickTopTab"></top-navbar>
+		<top-navbar :list = "list" :swiperIndex="swiperIndex" @clickTopTab="clickTopTab"></top-navbar>
 		<view class="home-list">
 			<nav-list :topNavIndex="topNavIndex" @listSwiperChange="listSwiperChange"></nav-list>
 		</view>
@@ -14,6 +14,7 @@ import {mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
+				list: [{name: '热榜'}, {name: '热播'}],
 				topNavIndex:0,
 				swiperIndex:0
 			}
