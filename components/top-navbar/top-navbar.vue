@@ -1,6 +1,6 @@
 <template>
 	<view class="topNavBar-container">
-		<view :style = "{height:menuButton + 'px'}"></view>
+	<view :style = "{height:menuButton + 'px'}"></view>
 	<view class="topNavBar-container__fixed">
 		<!-- 占位状态栏高度 -->
 	<view :style="{height:statusBarHeight+'px'}"></view>
@@ -17,11 +17,17 @@
 			swiperIndex:{
 				type:Number,
 				default:0
+			},
+			list:{
+				type:Array,
+				default(){
+					return []
+				}
 			}
 		},
 		data() {
 			return {
-				 list: [{name: '热榜'}, {name: '热播'}],
+				 
 				 statusBarHeight:0,
 				 windowWidth:375,
 				 menuButton:44

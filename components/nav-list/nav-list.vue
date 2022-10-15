@@ -1,10 +1,10 @@
 <template>
 	<view class="navList-container">
 		<swiper class="navList-container__swiper" :current = "topNavIndex" @change="change">
-			<swiper-item class="navList-container__swiper-item">
+			<swiper-item class="navList-container__swiper-item" >
 				<list-scroll><hot></hot></list-scroll>
 			</swiper-item>
-			<swiper-item>
+			<swiper-item class="navList-container__swiper-item">
 				<list-scroll><hot-video></hot-video></list-scroll>
 			</swiper-item>
 		</swiper>
@@ -31,7 +31,7 @@
 				//swiper滑动触发事件  使得顶部nav发生改变
 				this.$emit('listSwiperChange',current);
 			}
-		}
+	},
 	}
 </script>
 
