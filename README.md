@@ -19,3 +19,20 @@
 
   1. 布局问题导致各个设备稍微不兼容(需要后期完善)。
   2. 组件封装对于冒泡框下方三角指示主要通过两层倒三角叠加并且通过定位来确定位置。
+
+# 10.15
+- 完成对项目设备属性的保存以及对于导航tabs粘性布局的修改、文章卡片的编写
+
+  总结如下
+
+  1. position:sticky; 需指定距离top位置属性。
+  2. 利用Vuex模块化，来保存设备状态至一个模块。以达到模块化管理
+
+# 10.15
+- 完成对项目热播模块的编写以及完成，解决切换tab返回顶部、
+
+  总结如下
+
+  1. OnpageScroll生命周期用来监听页面的滚动事件，但是他不能监听scroll-view。监听scroll-view需要用到scroll-view自身的scroll + scrollTop来实现。
+  2. scroll-view中scroll-top无效果问题，可以借助官网来解释：[地址如下](https://uniapp.dcloud.net.cn/tutorial/vue-api.html#componentsolutions)
+  3. 对于OnpageScroll可以通过uni.OnpageScroll函数更好的去完成返回顶部功能

@@ -1,6 +1,9 @@
 <template>
 	<view>
-		my
+		<view class="" v-for="item in 100">
+			{{item}}
+		</view>
+		<button @click="backTop()">返回顶部</button>
 		<tabbar :current='1'></tabbar>
 	</view>
 </template>
@@ -11,6 +14,13 @@
 			return {
 				
 			};
+		},
+		methods:{
+			backTop(){
+				uni.OnpageScroll({
+					scrollTop:0
+				})
+			}
 		}
 	}
 </script>

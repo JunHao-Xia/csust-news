@@ -9,11 +9,8 @@
 		<view class="hot-container__uTabs">
 		<u-tabs  :list= "list" @touchmove.stop></u-tabs>
 		</view>
-		<!-- <view class="hot-container__card">
-			<hot-card></hot-card>
-		</view> -->
-		<view v-for="item in 100">
-			{{item}}
+		<view class="hot-container__card">
+			<hot-card v-for="(item,index) in 10" :key="index"></hot-card>
 		</view>
 	</view>
 </template>
@@ -39,7 +36,8 @@
 			};
 		},
 		methods:{
-		}
+		},
+
 	}
 </script>
 
@@ -62,6 +60,7 @@
 	.hot-container__uTabs{
 		background-color: #fff;
 		position: sticky;
+		z-index: 99;
 		top: 0; 
 	}
 }
