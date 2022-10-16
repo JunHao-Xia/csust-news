@@ -30,7 +30,7 @@ import {mapActions} from 'vuex'
 			},
 			//获得swiper滑动时对应下标  通过swiper事件listSwiperChange传递至nav-navbar修改对应值
 			listSwiperChange(index){
-				this.swiperIndex=index
+				this.swiperIndex=index;
 			}
 		}
 	}

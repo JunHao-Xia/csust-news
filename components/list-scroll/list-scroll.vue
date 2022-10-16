@@ -1,8 +1,9 @@
 <template>
 	<!-- 滑动组件 -->
 	<view class="scorll-container">
-		<scroll-view class="scroll-container__box" scroll-y="true">
+		<scroll-view enable-back-to-top="true" @scroll="scroll" :scroll-top = "scrollTop" class="scroll-container__box" scroll-y="true">
 			<slot></slot>
+			<button @click="backTop">回到顶部</button>
 		</scroll-view>
 	</view>
 </template>
@@ -10,8 +11,22 @@
 <script>
 	export default {
 		data() {
-			return {	
+			return {
+				//
+				oldScroll:0,
+				scrollTop:0
 			};
+		},
+		methods:{
+			scroll(e){
+				this.oldScroll = e.detail.scrollTop;
+			},
+			backTop(){
+				this.scrollTop = this.oldScroll;
+				this.$nextTick(()=>{
+					this.scrollTop=0;
+				})
+			}
 		}
 	}
 </script>
