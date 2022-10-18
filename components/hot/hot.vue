@@ -3,11 +3,11 @@
 		<view class="hot-container__logo">
 			<image src="../../static/csustTop.png" mode="aspectFit"></image>
 		</view>
-		<view class="hot-container__search">
+		<view class="hot-container__search" @click="toSearchPage">
 		<hot-search :placehoderText="placehoderText"></hot-search>
 		</view>
 		<view class="hot-container__uTabs">
-		<u-tabs  :list= "list" @touchmove.stop></u-tabs>
+		<u-tabs  :list= "list" @touchmove.stop @click="clickTabs"></u-tabs>
 		</view>
 		<view class="hot-container__card">
 			<hot-card v-for="(item,index) in 10" :key="index"></hot-card>
@@ -36,6 +36,17 @@
 			};
 		},
 		methods:{
+			clickTabs(e){
+				//当页面被点击，触发页面内容置顶
+				uni.$emit('tabToBackTop');
+			},
+			
+			// 跳转至subpkg下的search-blog页面
+			toSearchPage(){
+				uni.navigateTo({
+					url:"/subpkg/pages/search-blog/search-blog"
+				})
+			}
 		},
 
 	}

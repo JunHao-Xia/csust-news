@@ -3,7 +3,6 @@
 	<view class="scorll-container">
 		<scroll-view enable-back-to-top="true" @scroll="scroll" :scroll-top = "scrollTop" class="scroll-container__box" scroll-y="true">
 			<slot></slot>
-			<button @click="backTop">回到顶部</button>
 		</scroll-view>
 	</view>
 </template>
@@ -16,6 +15,12 @@
 				oldScroll:0,
 				scrollTop:0
 			};
+		},
+		
+		created() {
+			uni.$on('tabToBackTop',()=>{
+				this.backTop()
+			})
 		},
 		methods:{
 			scroll(e){
