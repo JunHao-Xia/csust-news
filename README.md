@@ -36,3 +36,19 @@
   1. OnpageScroll生命周期用来监听页面的滚动事件，但是他不能监听scroll-view。监听scroll-view需要用到scroll-view自身的scroll + scrollTop来实现。
   2. scroll-view中scroll-top无效果问题，可以借助官网来解释：[地址如下](https://uniapp.dcloud.net.cn/tutorial/vue-api.html#componentsolutions)
   3. 对于OnpageScroll可以通过uni.OnpageScroll函数更好的去完成返回顶部功能
+
+# 10.18
+
+- uniapp分包
+
+- 完成对于搜索界面中搜索框以及对于搜索框触发事件进行一系列逻辑处理和组件切换。
+
+  总结如下：
+
+  1. uniapp中pages.json 中的subPackages可用来分包。分包可以用来加快小程序运行速度以及优化用户体验(根据用户操作来下载包资源)。
+  2. 在封装组件的过程中，尽量把组件内回调函数暴露给父组件进行操作。
+  3. 在编写代码过程中，尽量不使用无意义字符串(可以将字符串封装成常量来操作)。
+  4. 在利用组件父子间传递参数时，可以将传入相关配置对象来实现组件的个性化定义。
+  5. 多看导入组件源码，利用代码调试查找微小bug。
+
+  ​	
