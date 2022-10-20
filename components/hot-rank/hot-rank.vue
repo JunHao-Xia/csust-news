@@ -1,16 +1,31 @@
 <template>
 	<view class="hotRank-container">
-		<image class="hotRank-container__bg" src="../../static/images/ranking-1.png" mode="aspectFit"></image>
-		<text class="hotRank-container__text">1</text>
+		<image class="hotRank-container__bg" :src="getRockBg" mode="aspectFit"></image>
+		<text class="hotRank-container__text" :class="{'text-white':ranking<=3}">{{ranking}}</text>
 	</view>
 </template>
 
 <script>
 	export default {
+		props:{
+			ranking:{
+				type:Number,
+				require:true
+			}
+		},
 		data() {
 			return {
 				
 			};
+		},
+		computed:{
+			getRockBg(){
+				//第一到第三更改样式
+				if(this.ranking<=3){
+					return require(`@/static/images/ranking-${this.ranking}.png`)
+				}
+				return require('@/static/images/ranking-other.png')
+			}
 		}
 	}
 </script>
@@ -34,6 +49,9 @@
 			font-weight: bold;
 			color: $uni-text-color;
 		}
+	.text-white{
+		color: white;
+	}
 	}
 
 </style>

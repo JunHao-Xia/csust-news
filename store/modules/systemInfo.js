@@ -1,10 +1,12 @@
 
 export default {
 	namespaced:true,
-	state:{
+	state:()=>{
+		return {
 		statusHeight:0,
 		windowWidth:0,
-		windowHeight:0
+		windowHeight:0	
+		}
 	},
 	mutations:{
 		updateSystemInfo(state,info){
