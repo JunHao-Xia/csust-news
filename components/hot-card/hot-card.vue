@@ -4,7 +4,7 @@
 		<!-- 左边盒子 -->
 		<view class="hotCard-letf">
 			<!-- 排名 -->
-			<hot-rank></hot-rank>
+			<hot-rank :ranking="index+1"></hot-rank>
 		</view>
 		<!-- 右边盒子 -->
 		<view class="hotCard-right">
@@ -35,6 +35,12 @@
 
 <script>
 	export default {
+		props:{
+			index:{
+				type:Number,
+				default:0
+			}
+		},
 		data() {
 			return {
 				

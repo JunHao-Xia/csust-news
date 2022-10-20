@@ -10,7 +10,7 @@
 		<u-tabs  :list= "list" @touchmove.stop @click="clickTabs"></u-tabs>
 		</view>
 		<view class="hot-container__card">
-			<hot-card v-for="(item,index) in 10" :key="index"></hot-card>
+			<hot-card v-for="(item,index) in 10" :index="index" :key="index"></hot-card>
 		</view>
 	</view>
 </template>

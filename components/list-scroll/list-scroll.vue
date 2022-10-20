@@ -27,6 +27,7 @@
 				this.oldScroll = e.detail.scrollTop;
 			},
 			backTop(){
+				if(this.oldScroll <150) return;
 				this.scrollTop = this.oldScroll;
 				this.$nextTick(()=>{
 					this.scrollTop=0;
