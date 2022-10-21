@@ -42,14 +42,16 @@
 		display: flex;
 		justify-content: center;
 		align-items: flex-end;
-		margin-bottom: 170rpx;
+		margin-bottom: 80px;
 			.release-container__boxItem{
+				background-color: white;
 				position: relative;
-				width: 300rpx;
+				width: 200px;
 				height: 50px;
-				box-shadow: 5px 5px 1px gray;
+				box-shadow: $uni-boxShadow-base;
 				border-radius: $uni-border-radius-lg;
-				border: 4px solid $uni-color-lightBlue;
+				border: 1px solid $uni-color-lightBlue;
+				padding: $uni-spacing-row-base;
 				display: flex;
 				align-items: center;
 				justify-content: space-around;
@@ -59,8 +61,9 @@
 					height: 0;
 					border: 10px solid;
 					position: absolute;
-					bottom: -24px;
-					left: 65px;
+					transform: translateX(-50%);
+					bottom: -21px;
+					left: 50%;
 					border-color:  $uni-color-lightBlue transparent transparent;
 				}
 				&::after{
@@ -69,8 +72,9 @@
 					height: 0;
 					border: 10px solid;
 					position: absolute;
-					bottom: -18px;
-					left: 65px;
+					bottom: -20px;
+					transform: translateX(-50%);
+					left: 50%;
 					border-color:  #fff transparent transparent;
 				}
 				.release-container__boxItem-base{
