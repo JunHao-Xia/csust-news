@@ -18,6 +18,7 @@ export default {
 	actions:{
 		updateSystemInfo({commit}){
 			let systemInfo = uni.getSystemInfoSync();
+			console.log(systemInfo)
 			commit('updateSystemInfo',systemInfo)
 			
 		}

@@ -42,7 +42,7 @@
 				//输入框内容
 				searchText:"",
 				//输入框placehoder
-				placehoderText:"搜索",
+				placehoderText:"uniapp",
 				HOT_LIST,
 				HOT_HISTORY,
 				HOT_RESULT,

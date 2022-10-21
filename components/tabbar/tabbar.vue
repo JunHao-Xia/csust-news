@@ -13,7 +13,7 @@
 		<u-tabbar-item text="首页" icon="home"></u-tabbar-item>
 		<u-tabbar-item text="我的" icon="account" ></u-tabbar-item>
 	</u-tabbar>
-	<release :show ="show" @updateOverlay = "openRelease"></release>
+		<release :show ="show" @updateOverlay = "openRelease"></release>
 	</view>
 </template>
 
