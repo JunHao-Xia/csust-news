@@ -22,7 +22,7 @@
             "path" : "pages/release/release",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "发表文章",
                 "enablePullDownRefresh": false
             }
             

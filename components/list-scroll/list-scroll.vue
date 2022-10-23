@@ -33,6 +33,9 @@
 					this.scrollTop=0;
 				})
 			}
+		},
+		beforeDestroy() {
+			uni.$off('tabToBackTop')
 		}
 	}
 </script>

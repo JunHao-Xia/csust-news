@@ -1,0 +1,92 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3654211 */
+  src:url('static/fonts/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shujuhuifu:before {
+  content: "\e6a6";
+}
+
+.icon-chehui:before {
+  content: "\e643";
+}
+
+.icon-xuanzekuang-duoxuanyixuan:before {
+  content: "\e639";
+}
+
+.icon-zhengquewancheng:before {
+  content: "\e8e5";
+}
+
+.icon-jianpan:before {
+  content: "\e64d";
+}
+
+.icon-icon-indent-left:before {
+  content: "\e66f";
+}
+
+.icon-icon-indent-right:before {
+  content: "\e670";
+}
+
+.icon-Aa:before {
+  content: "\e636";
+}
+
+.icon-delete:before {
+  content: "\e630";
+}
+
+.icon-tupian:before {
+  content: "\e889";
+}
+
+.icon-juzhongduiqi:before {
+  content: "\ec80";
+}
+
+.icon-zitijiacu:before {
+  content: "\ec83";
+}
+
+.icon-zitixiahuaxian:before {
+  content: "\ec85";
+}
+
+.icon-zitixieti:before {
+  content: "\ec86";
+}
+
+.icon-juyou:before {
+  content: "\e618";
+}
+
+.icon-juzuo:before {
+  content: "\e619";
+}
+
+.icon-zitidaxiao-:before {
+  content: "\e63f";
+}
+
+.icon-orderedList:before {
+  content: "\e612";
+}
+
+.icon-unorderedList:before {
+  content: "\e620";
+}
+
+.icon-gouwuche:before {
+  content: "\e70b";
+}
