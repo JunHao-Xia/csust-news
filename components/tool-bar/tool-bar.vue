@@ -4,18 +4,18 @@
 	 -->
 	<view class="toolBar-container">
 		<!-- 键盘图标 -->
-		<view class="toolBar-container__image">
+		<view class="toolBar-container__keyword" @click="keyword">
 			<i class="iconfont icon-jianpan btn_keyword"></i>
 		</view>
 
 		<!-- 遍历图标列表 -->
 		<view class="toolBar-container__box">	
-		<view class="toolBar-container__box-icon" @click="changeIconActive(index)" :class="{active:iconIndex === index}" v-for="(item,index) in list" :key="index">
-		<i class = "iconfont" :class="item"></i>
+		<view class="toolBar-container__box-icon" @click="toolBarClick(item.form,index)" :class="{active:iconIndex === index}" v-for="(item,index) in list" :key="index">
+		<i class = "iconfont" :class="item.icon"></i>
 		</view>
 		</view>
 		<!-- 完成图标 -->
-		<view class="toolBar-container__finish">
+		<view class="toolBar-container__finish" @click="finish">
 			<i class="iconfont icon-zhengquewancheng btn-finish"></i>
 		</view>
 	</view>
@@ -23,22 +23,47 @@
 
 <script>
 	export default {
+		props:{
+			list:{
+				type:Array,
+				default(){
+					return []
+				}
+			},
+			tragger:{
+				type:Boolean,
+				default:true
+			}
+		},
 		data() {
 			return {
 				//选中图标
 				iconIndex:-1,
 				//图标列表
-				list:['icon-tupian','icon-Aa','icon-juzhongduiqi','icon-xuanzekuang-duoxuanyixuan','icon-chehui','icon-shujuhuifu']
 			};
 		},
+		watch:{
+			tragger(){
+				this.iconIndex = -1;
+			}
+		},
 		methods:{
-			changeIconActive(index){
-				if(index ===1 || index ===2){
+			toolBarClick(form,index){
+				//如果点击tab按钮首先将iconIndex设置为-1
+				this.iconIndex = -1;
+				if(!form){
 					this.iconIndex = index;
-				}else{
-					this.iconIndex = -1;
+					this.$emit('changeIndex',index)
+					return;
 				}
-				this.$emit('changInconActive',index)
+				this.$emit('changeIndex',index)
+				this.$emit('toolbarForm',form);
+			},
+			keyword(){
+				this.$emit('keyword');
+			},
+			finish(){
+				this.$emit('finish');
 			}
 		}
 	}
@@ -47,14 +72,12 @@
 <style lang="scss" scoped>
 .toolBar-container{
 		width: 100%;
-		margin: $uni-spacing-row-sm 0 0 0;
 		height: 45px;
-		border-top: 1px solid $uni-border-color;
-		border-bottom: 1px solid $uni-border-color;
+		box-sizing: border-box;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		.toolBar-container__image{
+		.toolBar-container__keyword{
 			padding:$uni-spacing-row-base;
 			box-sizing: border-box;
 			position: relative;
@@ -62,7 +85,7 @@
 				font-size: 20px;
 			}
 		}
-		.toolBar-container__image::after{
+		.toolBar-container__keyword::after{
 			@extend .common;
 			right:0;
 		}
