@@ -17,13 +17,14 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}
-	    ,{
+		},
+		{
             "path" : "pages/my/my",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "个人信息",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#ffffff"
             }
             
         }
