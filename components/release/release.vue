@@ -3,7 +3,7 @@
 		<u-overlay :show="show" @click="updateOverlay" opacity="0">
 			<view class="release-container__box">
 			<view class="release-container__boxItem" @tap.stop>
-				<view class="release-container__boxItem-base">
+				<view class="release-container__boxItem-base" @click="openArtcle">
 					<u-icon labelPos="bottom" label="发表文章" name="file-text" size="30"></u-icon>
 				</view>
 				<view class="release-container__boxItem-base">
@@ -30,6 +30,12 @@
 		methods:{
 			updateOverlay(){
 				this.$emit('updateOverlay');
+			},
+			//打开发布文章页
+			openArtcle(){
+				uni.navigateTo({
+					url:'/pages/release/release'
+				})
 			}
 		}
 	}
