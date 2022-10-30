@@ -34,7 +34,7 @@ module.exports = {
 			}]
 		},
 		{
-			name: "number",
+			name: "fontSize",
 			value: [18, 16, 14, 12, 11, 10]
 		},
 		{
@@ -47,10 +47,10 @@ module.exports = {
 			name: "icon",
 			value: [{
 				icon: 'icon-orderedList',
-				form: 'ordered'
+				list: 'ordered'
 			}, {
 				icon: 'icon-unorderedList',
-				form: 'bullet'
+				list: 'bullet'
 			}]
 		},
 		{
@@ -67,8 +67,8 @@ module.exports = {
 			}]
 		},
 		{
-			name: "number",
-			value: ['1', '1.3','1.5', '2', '3']
+			name: "lineHeight",
+			value: [1, 1.3,1.5, 2, 3]
 		},
 	]
 	]
