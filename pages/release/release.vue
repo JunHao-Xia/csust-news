@@ -3,11 +3,16 @@
 		<!--标题-->
 			<release-title></release-title>
 		<!--富文本输入栏 -->
-		<view class="release-container__edit" @click="clickEdit">
+		<view class="release-container__edit">
 			<list-scroll>
 				<editor id="editor" class="ql-container" placeholder="请输入内容" @input="onRichInput" @ready="onEditorReady"
 					@show-img-resize="true" @show-img-toolbar="true" @show-img-size="true" @focus="onRichFocus"
 					@blur="onRichBlur" @statuschange="richStatuschange"></editor>
+					<button @click="setBold">加粗</button>
+					<button @click="setUnderLine">下划线</button>
+					<button @click="setTextColor('#fd3136')">文字颜色</button>
+					
+					<button @click="setFontSize(18)">大小</button>
 			</list-scroll>
 		</view>
 			<!--tool-bar-->
@@ -18,7 +23,7 @@
 			<swiper class="swiper-container" v-show="iconToBox===1 || iconToBox ===2" :current="iconToBox-1">
 				<swiper-item class="swiper-container__item" v-for="(obj,index) in textStyleList" :key="index">
 					<block v-for="(item,i) in obj" :key="i">
-					<txtform-item :styleObj = "item"></txtform-item>
+					<txtform-item :selectedStyle = "selectedStyle" :styleObj = "item"></txtform-item>
 					</block>
 				</swiper-item>
 			</swiper>
@@ -59,7 +64,9 @@
 					'align':this.setAlignOfText,
 					'section':this.setLineHight
 				},
-				iconToBox: 0
+				iconToBox: 0,
+				//选中样式
+				selectedStyle:{}
 			}
 		},
 		
@@ -111,6 +118,8 @@
 			},
 			//通过context修改样式时触发
 			richStatuschange(e) {
+				//选中样式
+				this.selectedStyle= e.detail;
 				console.log("修改样式")
 			},
 			//子盒子传入修改样式

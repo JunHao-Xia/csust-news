@@ -1,11 +1,11 @@
 <template>
 	<view class="txtform-container">
-		<view class="txtform-container__box" v-for="(item,index) in styleObj.value" :key="index">
-			
+		<view class="txtform-container__box" :class="{active:isActiveMethod(item)}"  v-for="(item,index) in styleObj.value" :key="index">
+			<!-- :class="{active:isActiveMethod(item)}" -->
 			<!-- 图标行 -->
 			<i v-if="styleObj.name===ICON" class="iconfont" :class="item.icon"></i>
 			<!-- 文字行 -->
-			<view v-if="styleObj.name===NUMBER" class="txtform-text">{{item}}</view>
+			<view v-if="styleObj.name===FONTSIZE || styleObj.name===LINEHEIGHT" class="txtform-text">{{item}}</view>
 			<!-- 颜色行 -->
 			<view v-if="styleObj.name===COLOR" class="circle-color" :style="{backgroundColor:item}"></view>
 		</view>
@@ -14,7 +14,8 @@
 
 <script>
 	const ICON="icon";
-	const NUMBER = "number";
+	const FONTSIZE = "fontSize";
+	const LINEHEIGHT = "lineHeight";
 	const COLOR= "color";
 	export default {
 		props:{
@@ -28,19 +29,45 @@
 				default(){
 					return {}
 				}
+			},
+			//选中样式
+			selectedStyle:{
+				type:Object,
+				default(){
+					return {}
+				}
 			}
-		},
-		created() {
-			console.log(this.styleObj)
 		},
 		data() {
 			return {
 				ICON,
-				NUMBER,
-				COLOR
+				FONTSIZE,
+				COLOR,
+				LINEHEIGHT
 			};
 		},
 		methods:{
+			//是否被选中  return bool
+			isActiveMethod(item){
+				let selectKeys=Object.keys(this.selectedStyle)
+				if(selectKeys.length===0)	return false;
+				return selectKeys.some(key=>{
+					if(this.styleObj.name === 'fontSize'){
+						return item+'px' === this.selectedStyle[key]
+					}else if(this.styleObj.name === 'lineHeight'){
+						return item+'' === this.selectedStyle[key]
+					}
+					else if(this.styleObj.name === 'color'){
+						return item === this.selectedStyle[key]
+					}
+					return item[key] === this.selectedStyle[key]
+				}) 
+				// for(let key in this.selectedStyle.keys()){
+				// 	console.log(key)
+				// }
+				// console.log("==============")
+				// return true;
+			}
 		}
 	}
 </script>
