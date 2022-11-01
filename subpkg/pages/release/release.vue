@@ -1,32 +1,31 @@
 <template>
-	<view class="release-container" :style="{paddingBottom:safeAreaInsets-safeDistance+chilrenBoxHeight+'px'}">
+	<view class="release-container" :style="{paddingBottom:safeAreaInsets-safeDistance+'px'}">
 		<!--标题-->
-			<release-title></release-title>
+			<release-title @inputVal = "inputVal"></release-title>
 		<!--富文本输入栏 -->
 		<view class="release-container__edit">
 			<list-scroll>
 				<editor id="editor" class="ql-container" placeholder="请输入内容" @input="onRichInput" @ready="onEditorReady"
 					@show-img-resize="true" @show-img-toolbar="true" @show-img-size="true" @focus="onRichFocus"
 					@blur="onRichBlur" @statuschange="richStatuschange"></editor>
-					<button @click="setBold">加粗</button>
-					<button @click="setUnderLine">下划线</button>
-					<button @click="setTextColor('#fd3136')">文字颜色</button>
-					
-					<button @click="setFontSize(18)">大小</button>
 			</list-scroll>
 		</view>
 			<!--tool-bar-->
-			<tool-bar :tragger="tragger" :list="toolBarList" @changIconActive="changIconActive" @toolbarForm="toolBarForm"
+			<view :style="{paddingBottom:keyHeight+'px'}">
+			<tool-bar :trangger="trangger" :list="toolBarList" @changIconActive="changIconActive" @toolbarForm="toolBarForm"
 				@changeIndex="changeIndex" @keyword="onKeyword" @finish="onFinish"></tool-bar>
-				
+			</view>
 			<!--子菜单利用swiper-->
 			<swiper class="swiper-container" v-show="iconToBox===1 || iconToBox ===2" :current="iconToBox-1">
-				<swiper-item class="swiper-container__item" v-for="(obj,index) in textStyleList" :key="index">
+				<swiper-item @touchmove.stop=""  class="swiper-container__item" v-for="(obj,index) in textStyleList" :key="index">
 					<block v-for="(item,i) in obj" :key="i">
-					<txtform-item :selectedStyle = "selectedStyle" :styleObj = "item"></txtform-item>
+					<txtform-item @childIconStyle = "childIconStyle" :selectedStyle = "selectedStyle" :styleObj = "item"></txtform-item>
 					</block>
 				</swiper-item>
 			</swiper>
+			
+			<!-- 安全距离 -->
+			<view :style="{height:safeDistance+'px'}"></view>
 			
 		</view>
 	</view>
@@ -58,22 +57,51 @@
 					'bold':this.setBold,
 					'italic':this.setItalic,
 					'underline':this.setUnderLine,
-					'size':this.setFontSize,
+					'fontSize':this.setFontSize,
 					'color':this.setTextColor,
 					'list':this.listAll,
 					'align':this.setAlignOfText,
-					'section':this.setLineHight
+					'lineHeight':this.setLineHight
 				},
-				iconToBox: 0,
+				iconToBox: -1,
+				trangger:true,
+				//安全距离
+				safeDistance:0,
+				//键盘高度
+				keyHeight:0,
 				//选中样式
-				selectedStyle:{}
+				selectedStyle:{},
+				//标题
+				value:'',
+				titleContent:''
 			}
 		},
-		
+		computed:{
+			...mapState('systemInfo',['safeAreaInsets'])
+		},
+		created() {
+			//获取设备信息
+			this.updateSystemInfo();
+			this.safeDistance = this.safeAreaInsets;
+			//监听键盘变化
+			// #ifdef MP-WEIXIN
+			uni.onKeyboardHeightChange(res=>{
+				if(res.height === 0 ){
+					//恢复工具栏安全距离
+					this.safeDistance = this.safeAreaInsets;
+				}else{
+					this.iconToBox = -1;
+					this.safeDistance=0;
+				}
+				this.keyHeight = res.height;
+				
+			})
+			// #endif
+		},
 		methods: {
+			...mapActions('systemInfo', ['updateSystemInfo']),
 			//点击键盘
 			onKeyword() {
-				console.log('点击键盘');
 				//收起键盘
 				uni.hideKeyboard();
 			},
@@ -110,6 +138,8 @@
 			},
 			//富文本框聚焦时触发函数
 			onRichFocus(e) {
+				//将子富文本隐藏
+				this.trangger = !this.trangger;
 				
 			},
 			//富文本框失去焦点时触发
@@ -122,9 +152,12 @@
 				this.selectedStyle= e.detail;
 				console.log("修改样式")
 			},
-			//子盒子传入修改样式
-			changeTextStyle(item,form){
-				
+			childIconStyle(form,value){
+				this.mapName[form](value);
+			},
+			//标题传递
+			inputVal(value){
+				this.titleContent = value;
 			}
 
 		}
@@ -186,6 +219,8 @@
 			height: 100%;
 		}
 			.swiper-container{
+				margin: 5px 0;
+				box-sizing: border-box;
 				height: 180px;
 				.swiper-container__item{
 					padding: $uni-spacing-row-lg $uni-spacing-row-base;

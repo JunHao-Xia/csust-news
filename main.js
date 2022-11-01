@@ -3,6 +3,8 @@ import App from './App'
 // #ifndef VUE3
 import Vue from 'vue'
 import uView from '@/uni_modules/uview-ui'
+import api from '@/http/api/index.js'
+Vue.prototype.$api = api;
 import store from './store'
 Vue.use(uView)
 Vue.config.productionTip = false

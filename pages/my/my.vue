@@ -1,7 +1,7 @@
 <template>
 	<view class="my-container">
-		<my-login v-if="false" @login="login"></my-login>
-		<view class="logout-container">
+		<my-login v-if="true" @login="login"></my-login>
+		<view class="logout-container" v-else>
 			<!-- 头像 -->
 			<view class="logout-container__avatar">
 				<image src="../../static/images/default-avatar.png" mode="aspectFill"></image>
@@ -11,7 +11,7 @@
 				<!-- 创作 -->
 				<view class="logout-container__info-text">
 					<text class="divider">创作</text>
-				</view>
+				</view>  
 				<!-- 关注 -->
 				<view class="divider logout-container__info-text">
 					<text class="divider">关注</text>
@@ -39,8 +39,14 @@
 			};
 		},
 		methods:{
-			login(){
-				console.log("login")
+			async login(){
+				uni.getUserProfile({
+					lang:'zh_CN',
+					desc:'study',
+					success:()=>{
+						
+					}
+				})
 			}
 		}
 	}

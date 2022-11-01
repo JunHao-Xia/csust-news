@@ -1,6 +1,6 @@
 <template>
 	<view class="txtform-container">
-		<view class="txtform-container__box" :class="{active:isActiveMethod(item)}"  v-for="(item,index) in styleObj.value" :key="index">
+		<view class="txtform-container__box" :class="{active:isActiveMethod(item)}" @click="clickChildIcon(item)"  v-for="(item,index) in styleObj.value" :key="index">
 			<!-- :class="{active:isActiveMethod(item)}" -->
 			<!-- 图标行 -->
 			<i v-if="styleObj.name===ICON" class="iconfont" :class="item.icon"></i>
@@ -62,11 +62,14 @@
 					}
 					return item[key] === this.selectedStyle[key]
 				}) 
-				// for(let key in this.selectedStyle.keys()){
-				// 	console.log(key)
-				// }
-				// console.log("==============")
-				// return true;
+			},
+			//点击子图标按钮(传递属性以及值)
+			clickChildIcon(item){
+				if(item.form){
+					this.$emit('childIconStyle',item.form,item[item.form]);
+				}else{
+					this.$emit('childIconStyle',this.styleObj.name,item)
+				}
 			}
 		}
 	}
@@ -80,6 +83,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			box-sizing: border-box;
 			.txtform-container__box{
 				flex: 1;
 				padding: 10px 0;

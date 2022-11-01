@@ -33,8 +33,9 @@
 			},
 			//打开发布文章页
 			openArtcle(){
+				this.$emit('updateOverlay');
 				uni.navigateTo({
-					url:'/pages/release/release'
+					url:'/subpkg/pages/release/release'
 				})
 			}
 		}
