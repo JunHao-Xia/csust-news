@@ -30,7 +30,8 @@
 					return []
 				}
 			},
-			tragger:{
+			//触发器
+			trangger:{
 				type:Boolean,
 				default:true
 			}
@@ -43,8 +44,9 @@
 			};
 		},
 		watch:{
-			tragger(){
-				this.iconIndex = -1;
+			trangger(){
+				console.log(111)
+				this.iconIndex=-1;
 			}
 		},
 		methods:{

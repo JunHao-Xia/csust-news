@@ -5,23 +5,31 @@ module.exports={
 	},
 	//有序 / 无序列表 /选中框
 	listAll(types){
-		console.log(types)
 		this.editorCtx.format('list',types)
 	},
 	//上传图片
 	uploadImage(){
-		this.editorCtx.insertImage({
-			src:'https://pic1.imgdb.cn/item/63534ea216f2c2beb1fec198.jpg',
-			alt:'长理头条',
-			success:()=>{
+		uni.hideKeyboard()
+		uni.chooseImage({
+			count:1,
+			sizeType:['original','compressed'],
+			success:async (res)=>{
+				let resFile = res.tempFilePaths[0];
+				let imageResult = await uniCloud.uploadFile({
+					filePath:resFile,
+					cloudPath: String(Math.random()*5).split('.')[1] + '.png',
+					fileType:'image'
+				})
+				let resultUrl = imageResult.fileID;
+				console.log(resultUrl)
+				//将文件传至富文本
+				this.editorCtx.insertImage({
+					src:resultUrl,
+					alt:'长理头条'
+				})
 			}
-		})
-		// uni.chooseImage({
-		// 	count:1,
-		// 	sizeType:['original','compressed'],
-		// 	sourceType:'album',
 			
-		// })
+		})
 	},
 	//设置粗体
 	setBold(){

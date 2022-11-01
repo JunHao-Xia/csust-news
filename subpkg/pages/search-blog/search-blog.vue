@@ -55,8 +55,17 @@
 				*/ 
 			};
 		},
+		created() {
+			this.getHotList()
+		},
 		methods:{
 			...mapMutations('searchHistory',['addSearchHistory']),
+			async getHotList(){
+				let res = await this.$api.hotTopList({
+					data:{top:10}
+				})
+				console.log(res)
+			},
 			onSearchConfirm(val){
 				this.searchText = val?val:this.placehoderText;
 				this.showType = HOT_RESULT

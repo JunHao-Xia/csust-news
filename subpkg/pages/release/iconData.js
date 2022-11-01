@@ -24,12 +24,15 @@ module.exports = {
 			name: "icon", //渲染模式
 			value: [{
 				icon: 'icon-zitijiacu',
+				form:'bold',
 				bold: 'strong'
 			}, {
 				icon: 'icon-zitixiahuaxian',
+				form:'underline',
 				underline: true
 			}, {
 				icon: 'icon-zitixieti',
+				form:'italic',
 				italic: 'em'
 			}]
 		},
@@ -47,9 +50,11 @@ module.exports = {
 			name: "icon",
 			value: [{
 				icon: 'icon-orderedList',
+				form:'list',
 				list: 'ordered'
 			}, {
 				icon: 'icon-unorderedList',
+				form:'list',
 				list: 'bullet'
 			}]
 		},
@@ -57,12 +62,15 @@ module.exports = {
 			name: "icon",
 			value: [{
 				icon: 'icon-juzuo',
+				form:'align',
 				align: 'left'
 			}, {
 				icon: 'icon-juzhongduiqi',
+				form:'align',
 				align: 'center'
 			}, {
 				icon: 'icon-juyou',
+				form:'align',
 				align: 'right'
 			}]
 		},

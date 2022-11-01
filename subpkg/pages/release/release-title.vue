@@ -1,7 +1,7 @@
 <template>
 	<view class="release-container__header">
 		<view class="release-container__header-title">
-			<input type="text" placeholder="标题" maxlength="20" />
+			<input type="text" placeholder="标题" v-model="value" @input="inputValue" maxlength="25" />
 		</view>
 		<view class="release-container__header-btn">
 			<button type="primary">发布</button>
@@ -10,6 +10,20 @@
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+				value:''
+			}
+		},
+		methods:{
+			inputValue(){
+				if(this.value.length>=25) return;
+				this.$emit('inputVal',this.value)
+			}
+		}
+		
+	}
 </script>
 
 <style lang="scss" scoped>
