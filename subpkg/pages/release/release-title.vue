@@ -4,7 +4,7 @@
 			<input type="text" placeholder="标题" v-model="value" @input="inputValue" maxlength="25" />
 		</view>
 		<view class="release-container__header-btn">
-			<button type="primary">发布</button>
+			<button type="primary" @click="openRelease">发布</button>
 		</view>
 	</view>
 </template>
@@ -20,6 +20,9 @@
 			inputValue(){
 				if(this.value.length>=25) return;
 				this.$emit('inputVal',this.value)
+			},
+			openRelease(){
+				this.$emit('release');
 			}
 		}
 		

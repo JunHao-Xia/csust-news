@@ -1,6 +1,6 @@
 <template>
 	<view class="my-container">
-		<my-login v-if="true" @login="login"></my-login>
+		<my-login v-if="!isLogin" @login="login"></my-login>
 		<view class="logout-container" v-else>
 			<!-- 头像 -->
 			<view class="logout-container__avatar">
@@ -23,7 +23,7 @@
 			</view>
 			
 			<view class="logout-container__btn">
-				<button type="warn">退出登录</button>
+				<button type="warn" @click="logout">退出登录</button>
 			</view>
 			
 			
@@ -33,22 +33,51 @@
 </template>
 
 <script>
+	import {mapState,mapActions,mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
 			};
 		},
+		computed:{
+			...mapGetters('users',['isLogin']),
+			...mapState('users',['userInfo'])
+		},
 		methods:{
+			...mapActions('users',['user_login','user_logout']),
+			//登录
 			async login(){
 				uni.getUserProfile({
 					lang:'zh_CN',
 					desc:'study',
-					success:()=>{
-						
+					success:({userInfo})=>{
+						uni.showLoading()
+							uni.login({
+								provider: 'weixin',
+								success:async ({code}) => {
+									let {data} = await this.$api.login({
+										data:{
+											code
+										}
+									})
+									//传递结果以及用户信息
+									this.user_login([data.token,userInfo])
+								}
+							})
+					},
+					fail() {
+						uni.showToast({
+							title:"授权失败",
+							icon:'error'
+						})
 					}
 				})
+			},
+			//退出登录
+			logout(){
+				this.user_logout()
 			}
-		}
+	}
 	}
 </script>
 

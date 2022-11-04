@@ -9,24 +9,27 @@ module.exports={
 	},
 	//上传图片
 	uploadImage(){
-		uni.hideKeyboard()
+		this.onKeyword()
 		uni.chooseImage({
 			count:1,
 			sizeType:['original','compressed'],
 			success:async (res)=>{
 				let resFile = res.tempFilePaths[0];
+				uni.showLoading({
+					title:"正在上传",
+				})
 				let imageResult = await uniCloud.uploadFile({
 					filePath:resFile,
 					cloudPath: String(Math.random()*5).split('.')[1] + '.png',
 					fileType:'image'
 				})
 				let resultUrl = imageResult.fileID;
-				console.log(resultUrl)
 				//将文件传至富文本
 				this.editorCtx.insertImage({
 					src:resultUrl,
 					alt:'长理头条'
 				})
+				uni.hideLoading()
 			}
 			
 		})

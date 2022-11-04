@@ -55,7 +55,16 @@
 				        "navigationBarTitleText": "发表文章"
 				    } 
 				}
-			]
+			    ,{
+                    "path" : "article-detail/article-detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "文章详情",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 		}
 		
 	]

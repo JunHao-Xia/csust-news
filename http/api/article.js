@@ -19,4 +19,19 @@ export const addArticle = ({method,data})=>{
 	});
 }
 
+//根据文章标题模糊查询   data:{k,v}
+export const getArticleToContent = ({method,data})=>{
+	return request({
+		url:'article/query',
+		data
+	});
+}
+//查询文章详情
+export const getArticleDetail=({data})=>{
+	return request({
+		url:'article/detail',
+		data
+	});
+}
+
 

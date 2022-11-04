@@ -1,3 +1,4 @@
+
 const TOKEN = "token";
 const USERINFO='userInfo';
 export default {
@@ -5,46 +6,66 @@ export default {
 	state:()=>{
 		return {
 			//用户token
-			token:'',
+			token:uni.getStorageSync(TOKEN)||'',
 			//用户
-			userInfo:{}
+			userInfo:uni.getStorageSync(USERINFO)|| {},
+		}
+	},
+	getters:{
+		isLogin(state){
+			if(state.token) return  true;
+			return false
 		}
 	},
 	mutations:{
-		//设置token
-		SET_TOKEN(state,token){
+		//设置相关用户信息
+		SET_USERINFO(state,[token,userInfo]){
 			state.token = token;
+			state.isLogin =true;
 			this.commit('users/TOKEN_LOCATION',token)
-		},
-		//设置用户信息
-		SET_USERINFO(state,userInfo){
-			state.userInfo = userInfo;
 			this.commit('users/USERINFO_LOCATION',userInfo)
+		},
+		LOGOUT(state){
+			state.token='';
+			state.userInfo={};
+			this.commit('users/TOKEN_CLEAR');
+			this.commit('users/USERINFO_CLEAR');
 		},
 		//将token持久化
 		TOKEN_LOCATION(state,token){
-			uni.setStorageSync(TOKEN,token);
+			uni.setStorage({
+				key:TOKEN,
+				data:token
+			})
 		},
 		//将userinfo持久化
 		USERINFO_LOCATION(state,userInfo){
-			uni.setStorageSync(USERINFO,userInfo);
+			uni.setStorage({
+				key:USERINFO,
+				data:JSON.stringify(userInfo)
+			})
+		},
+		//将本地token删除
+		TOKEN_CLEAR(state){
+			uni.removeStorage({
+				key:TOKEN
+			})
+		},
+		//将本地用户对象删除
+		USERINFO_CLEAR(state){
+			uni.removeStorage({
+				key:USERINFO
+			})
 		}
 	},
 	actions:{
-		//登录逻辑
-		user_login({commit},userInfo){
-			uni.login({
-				provider: 'weixin',
-				success:async ({code}) => {
-					let {token} = await this.$api.login({
-						data:{
-							code
-						}
-					})
-					this.commit('users/SET_TOKEN',token);
-					this.commit('users/SET_USERINFO',userInfo);
-				}
-			})
+		//登录
+		user_login({commit},[token,userInfo]){
+			this.commit('users/SET_USERINFO',[token,userInfo])
+		},
+		//退出登录
+		user_logout(){
+			this.commit('users/LOGOUT')
 		}
 		
 	}

@@ -45,7 +45,6 @@
 		},
 		watch:{
 			trangger(){
-				console.log(111)
 				this.iconIndex=-1;
 			}
 		},
