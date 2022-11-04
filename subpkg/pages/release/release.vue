@@ -1,7 +1,7 @@
 <template>
-	<view class="release-container" :style="{paddingBottom:safeAreaInsets-safeDistance+'px'}">
+	<view class="release-container">
 		<!--标题-->
-			<release-title @inputVal = "inputVal"></release-title>
+			<release-title @inputVal = "inputVal" @release="openRelease"></release-title>
 		<!--富文本输入栏 -->
 		<view class="release-container__edit">
 			<list-scroll>
@@ -11,7 +11,7 @@
 			</list-scroll>
 		</view>
 			<!--tool-bar-->
-			<view :style="{paddingBottom:keyHeight+'px'}">
+			<view :style="{marginBottom:keyHeight+'px'}">
 			<tool-bar :trangger="trangger" :list="toolBarList" @changIconActive="changIconActive" @toolbarForm="toolBarForm"
 				@changeIndex="changeIndex" @keyword="onKeyword" @finish="onFinish"></tool-bar>
 			</view>
@@ -26,9 +26,7 @@
 			
 			<!-- 安全距离 -->
 			<view :style="{height:safeDistance+'px'}"></view>
-			
 		</view>
-	</view>
 </template>
 
 <script>
@@ -72,7 +70,6 @@
 				//选中样式
 				selectedStyle:{},
 				//标题
-				value:'',
 				titleContent:''
 			}
 		},
@@ -81,7 +78,6 @@
 		},
 		created() {
 			//获取设备信息
-			this.updateSystemInfo();
 			this.safeDistance = this.safeAreaInsets;
 			//监听键盘变化
 			// #ifdef MP-WEIXIN
@@ -108,6 +104,11 @@
 			// 点击完成
 			onFinish() {
 				uni.hideKeyboard();
+			},
+			gobackTop() {
+			        uni.pageScrollTo({
+			            scrollTop: 0
+			        });
 			},
 			toolBarForm(form) {
 				//toolBar传递回来并且通过mapName对象映射成函数名
@@ -144,7 +145,8 @@
 			},
 			//富文本框失去焦点时触发
 			onRichBlur(e) {
-				
+				//失去焦点直接回到顶部
+				this.gobackTop()
 			},
 			//通过context修改样式时触发
 			richStatuschange(e) {
@@ -158,6 +160,15 @@
 			//标题传递
 			inputVal(value){
 				this.titleContent = value;
+			},
+			//发布
+			openRelease(){
+				this.editorCtx.getContents({
+					success:({html})=>{
+						
+					}
+				})
+				
 			}
 
 		}

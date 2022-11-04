@@ -6,7 +6,7 @@ import request from '@/http/request.js'
 
 export const login = ({data})=>{
 	return request({
-		url:'/user/openid',
+		url:'/user/login',
 		method:'post',
 		data
 	})

@@ -1,5 +1,5 @@
 <template>
-	<view class="hotCard-container">
+	<view class="hotCard-container" @click="articleDetail">
 		<view class="hotCard-container__box">
 		<!-- 左边盒子 -->
 		<view class="hotCard-letf">
@@ -45,6 +45,13 @@
 			return {
 				
 			};
+		},
+		methods:{
+			articleDetail(){
+				uni.navigateTo({
+					url:'/subpkg/article-detail/article-detail'
+				})
+			}
 		}
 	}
 </script>

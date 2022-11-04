@@ -1,5 +1,5 @@
 const BASE_UTL = "https://kuim.xyz/hot_wall";
-function request({url,method,data}){
+function request({url,method,data,header}){
 	return new Promise((resolve,reject)=>{
 		uni.request({
 			url:BASE_UTL+url,
