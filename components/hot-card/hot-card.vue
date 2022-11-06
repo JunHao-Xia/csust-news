@@ -49,7 +49,7 @@
 		methods:{
 			articleDetail(){
 				uni.navigateTo({
-					url:'/subpkg/article-detail/article-detail'
+					url:'/subpkg/pages/article-detail/article-detail'
 				})
 			}
 		}

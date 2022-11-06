@@ -7,7 +7,7 @@ export default {
 		windowWidth:0,
 		windowHeight:0,
 		//获取底部安全距离
-		safeAreaInsets:0,
+		safeAreaInsets:40,
 		
 		}
 	},

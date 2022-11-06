@@ -1,6 +1,6 @@
 <template>
 	<view class="my-container">
-		<my-login v-if="!isLogin" @login="login"></my-login>
+		<my-login v-if="!isLogin" ></my-login>
 		<view class="logout-container" v-else>
 			<!-- 头像 -->
 			<view class="logout-container__avatar">
@@ -44,35 +44,8 @@
 			...mapState('users',['userInfo'])
 		},
 		methods:{
-			...mapActions('users',['user_login','user_logout']),
-			//登录
-			async login(){
-				uni.getUserProfile({
-					lang:'zh_CN',
-					desc:'study',
-					success:({userInfo})=>{
-						uni.showLoading()
-							uni.login({
-								provider: 'weixin',
-								success:async ({code}) => {
-									let {data} = await this.$api.login({
-										data:{
-											code
-										}
-									})
-									//传递结果以及用户信息
-									this.user_login([data.token,userInfo])
-								}
-							})
-					},
-					fail() {
-						uni.showToast({
-							title:"授权失败",
-							icon:'error'
-						})
-					}
-				})
-			},
+			...mapActions('users',['user_logout']),
+
 			//退出登录
 			logout(){
 				this.user_logout()

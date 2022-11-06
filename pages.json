@@ -56,10 +56,19 @@
 				    } 
 				}
 			    ,{
-                    "path" : "article-detail/article-detail",
+                    "path" : "pages/article-detail/article-detail",
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "文章详情",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "pages/login-pages/login-pages",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
                     "enablePullDownRefresh": false
                 }
                 

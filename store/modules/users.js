@@ -66,6 +66,21 @@ export default {
 		//退出登录
 		user_logout(){
 			this.commit('users/LOGOUT')
+		},
+		async isLogin({getters}){
+			if(getters.isLogin) return true;
+			let [err,res] = await uni.showModal({
+				title:'登录之后完成后续操作',
+				content:'立即跳转登陆界面?'
+			})
+			if(res.confirm){
+				uni.navigateTo({
+					url:'/subpkg/pages/login-pages/login-pages'
+				})
+			}
+			return false
+			
+			
 		}
 		
 	}

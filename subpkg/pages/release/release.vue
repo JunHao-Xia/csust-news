@@ -26,6 +26,7 @@
 			
 			<!-- 安全距离 -->
 			<view :style="{height:safeDistance+'px'}"></view>
+			<popup-info :isShow = "releaseShow" @changeShow="releaseShow=false"></popup-info>
 		</view>
 </template>
 
@@ -43,6 +44,7 @@
 		},
 		data() {
 			return {
+				releaseShow:false,
 				//表格数据
 				toolBarList,
 				//子样式栏渲染数据
@@ -163,6 +165,7 @@
 			},
 			//发布
 			openRelease(){
+				this.releaseShow=true
 				this.editorCtx.getContents({
 					success:({html})=>{
 						

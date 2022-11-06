@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import {mapActions} from 'vuex'
 	export default {
 		props:{
 			show:{
@@ -28,12 +29,16 @@
 			};
 		},
 		methods:{
+			...mapActions('users',['isLogin']),
 			updateOverlay(){
 				this.$emit('updateOverlay');
 			},
 			//打开发布文章页
-			openArtcle(){
+			async openArtcle(){
 				this.$emit('updateOverlay');
+				// 判断是否登录
+				let flag = await this.isLogin();
+				if(!flag) return;
 				uni.navigateTo({
 					url:'/subpkg/pages/release/release'
 				})
