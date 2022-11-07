@@ -29,7 +29,6 @@
 		<view class="">
 			评论列表
 		</view>
-		
 		<!--  -->
 		<view class=""></view>
 		

@@ -56,7 +56,7 @@
 			};
 		},
 		created() {
-			this.getHotList()
+			// this.getHotList()
 		},
 		methods:{
 			...mapMutations('searchHistory',['addSearchHistory']),
