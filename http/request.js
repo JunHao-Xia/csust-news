@@ -1,10 +1,13 @@
 const BASE_UTL = "https://kuim.xyz/hot_wall";
-function request({url,method,data,header}){
+function request({url,method,data}){
 	return new Promise((resolve,reject)=>{
 		uni.request({
 			url:BASE_UTL+url,
 			method:method || 'GET',
 			data,
+			header:{
+			'user-token':uni.getStorageSync('token')
+			},
 			success:({data})=>{
 				if(data.code ===0){
 					resolve(data)

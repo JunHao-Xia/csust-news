@@ -4,7 +4,7 @@
 			<input type="text" placeholder="标题" v-model="value" @input="inputValue" maxlength="25" />
 		</view>
 		<view class="release-container__header-btn">
-			<button type="primary" @click="openRelease">发布</button>
+			<button type="primary" @click="openRelease">提交</button>
 		</view>
 	</view>
 </template>

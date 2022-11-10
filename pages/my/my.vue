@@ -4,8 +4,9 @@
 		<view class="logout-container" v-else>
 			<!-- 头像 -->
 			<view class="logout-container__avatar">
-				<image src="../../static/images/default-avatar.png" mode="aspectFill"></image>
+				<image :src="userInfo.avatarUrl" mode="aspectFill"></image>
 			</view>
+			<view class="logout_nickName">{{userInfo.nickName}}</view>
 			<!-- 相关信息 -->
 			<view class="logout-container__info">
 				<!-- 创作 -->

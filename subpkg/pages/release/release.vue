@@ -11,7 +11,7 @@
 			</list-scroll>
 		</view>
 			<!--tool-bar-->
-			<view :style="{marginBottom:keyHeight+'px'}">
+			<view class="toolBar-box" :style="{marginBottom:keyHeight+'px'}">
 			<tool-bar :trangger="trangger" :list="toolBarList" @changIconActive="changIconActive" @toolbarForm="toolBarForm"
 				@changeIndex="changeIndex" @keyword="onKeyword" @finish="onFinish"></tool-bar>
 			</view>
@@ -26,7 +26,7 @@
 			
 			<!-- 安全距离 -->
 			<view :style="{height:safeDistance+'px'}"></view>
-			<popup-info :isShow = "releaseShow" @changeShow="releaseShow=false"></popup-info>
+			<popup-info @articleDetail='articleDetailSubmit' :imageList = "imageList"  :isShow = "releaseShow" @changeShow="releaseShow=false"></popup-info>
 		</view>
 </template>
 
@@ -72,7 +72,22 @@
 				//选中样式
 				selectedStyle:{},
 				//标题
-				titleContent:''
+				//提交表单
+				submitForm:{
+					//标题
+					title:'',
+					//内容
+					content:'',
+					//介绍
+					intro:'',
+					//分类
+					category_id:0,
+					//图片列表
+					picture_list:''
+				},
+				//图片列表
+				imageList:[]
+				
 			}
 		},
 		computed:{
@@ -92,6 +107,7 @@
 					this.safeDistance=0;
 				}
 				this.keyHeight = res.height;
+				console.log("keyheight=" + this.keyHeight)
 				
 			})
 			// #endif
@@ -137,43 +153,87 @@
 			},
 			//输入时触发函数
 			onRichInput() {
-				
+		
 			},
 			//富文本框聚焦时触发函数
 			onRichFocus(e) {
+				console.log("获取焦点")
+				this.gobackTop()
 				//将子富文本隐藏
-				this.trangger = !this.trangger;
-				
+				this.trangger = !this.trangger;	
 			},
 			//富文本框失去焦点时触发
 			onRichBlur(e) {
+				console.log("失去焦点")
 				//失去焦点直接回到顶部
-				this.gobackTop()
+				uni.hideKeyboard()
+				
 			},
 			//通过context修改样式时触发
 			richStatuschange(e) {
 				//选中样式
 				this.selectedStyle= e.detail;
-				console.log("修改样式")
 			},
 			childIconStyle(form,value){
 				this.mapName[form](value);
 			},
 			//标题传递
 			inputVal(value){
-				this.titleContent = value;
+				this.submitForm.title = value;
 			},
 			//发布
-			openRelease(){
+			async openRelease(){
+				//判断内容是否正确填写
+				if(!this.submitForm.title){
+					this.$msg('标题不能为空')
+					return
+				}
+				let {html} = await this.editorCtx.getContents()
+				if(html === '<p><br></p>'){
+					this.$msg('文章内容不能为空');
+					return
+				}
+				let imageArr = []
+				//查找出所有的的图片
+				html.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture)=>{
+					imageArr.push(capture);
+				});
+				this.imageList = imageArr
 				this.releaseShow=true
-				this.editorCtx.getContents({
-					success:({html})=>{
-						
+				this.submitForm.content = html;
+				
+			},
+			//弹出框中传给父类的其他文章信息
+			async articleDetailSubmit(articleDetail){
+				this.submitForm = {...this.submitForm,...articleDetail}
+				//根据mode来决定上传图片个数
+				let uploadArr = this.modeToImageCount(articleDetail.mode);
+				this.submitForm.picture_list = `[${uploadArr.toString()}]`;
+				//进行发布文章操作
+				//加载
+				uni.showLoading()
+				let res = await this.$api.addArticle({
+					data:this.submitForm
+				})
+				uni.hideLoading()
+				//跳转界面
+				uni.switchTab({
+					url:'/pages/index/index',
+					success:()=> {
+						this.$msg('添加文章成功','success')
 					}
 				})
 				
+				
+			},
+			modeToImageCount(mode){
+				if(mode==='image'){
+					return this.imageList.slice(0,1);
+				}else if(mode === 'column'){
+					return this.imageList.slice(0,3);
+				}
+				return []
 			}
-
 		}
 	}
 </script>
@@ -204,20 +264,16 @@
 					border: 1px solid $uni-border-color;
 				}
 			}
-
 			.release-container__header-btn {
 				width: 60px;
 				height: 40px;
-
 				button {
 					width: 100%;
 					height: 100%;
 					font-size: 16px;
 				}
-
 			}
 		}
-
 		.release-container__edit {
 			padding: 5px;
 			margin: 5px;
@@ -226,6 +282,9 @@
 			border: 1px solid $uni-border-color;
 			flex: 1;
 			overflow: hidden;
+		}
+		.toolBar-box{
+			box-sizing: content-box;
 		}
 
 		#editor {

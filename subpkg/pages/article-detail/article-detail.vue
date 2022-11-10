@@ -16,7 +16,7 @@
 				<view class="detail-authorInfo__create">于 2021-04-28 13:01:15 发布</view>
 			</view>
 			<!-- 关注按钮 -->
-				<button size="mini" type="primary" @click="fellow">关注</button>
+				<button size="mini" type="default" @click="fellow">关注</button>
 		</view>
 		</view>
 		
@@ -26,13 +26,13 @@
 		</view>
 		
 		<!-- 评论区 -->
-		<view class="">
+		<view class="detail-command__list">
 			评论列表
 		</view>
-		<!--  -->
-		<view class=""></view>
-		
-		
+		<!--下方点赞、评论、收藏-->
+		<view class="detail-bottom__menu">
+			<detail-topmenue></detail-topmenue>
+		</view>
 	</view>
 </template>
 
@@ -104,12 +104,16 @@
 			font-size:$uni-font-size-sm;
 		}
 		}
-		
-	}
-	}
+		}
+		}
 	.detail-content{
 		flex: 1;
 		
+	}
+	.detail-command__list{
+		background-color: gray;
+		padding:0 0 $uni-spacing-row-big 0;
+		box-sizing: border-box;
 	}
 }
 </style>

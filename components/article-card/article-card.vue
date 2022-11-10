@@ -10,9 +10,6 @@
 			<view class="card-box__resume">
 				我是一个对文章的描述哦~~~
 			</view>
-			<view class="card-box__image">
-					<image src="../../static/logo.png" mode="aspectFill"></image>
-			</view>
 		</block>
 		<!-- 大图 -->
 		<block v-else-if="mode === 'image'">

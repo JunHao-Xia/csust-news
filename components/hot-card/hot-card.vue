@@ -10,22 +10,22 @@
 		<view class="hotCard-right">
 			<!-- 标题 -->
 			<view class="hotCard-right__title">
-				标题
+				{{item.title}}
 			</view>
 			<!-- 描述 -->
 			<view class="hotCard-right__desc">
-				描述
+				{{item.intro}}
 			</view>
 			<!-- 文章信息 -->
 			<view class="hotCard-right__info">
 				<!-- 作者 -->
 				<view class="hotCard-right__info-author">
-					作者
+					{{item.author}}
 				</view>
 				<!-- 热度 -->
 				<view class="hotCard-right__info-hot">
 					<image class="hotCard-right__info-hot-image" src="../../static/images/hot-icon.png"></image>
-					<text class="hotCard-right__info-hot-hotText">1000k</text>
+					<text class="hotCard-right__info-hot-hotText">10k</text>
 				</view>
 			</view>
 		</view>
@@ -39,6 +39,12 @@
 			index:{
 				type:Number,
 				default:0
+			},
+			item:{
+				type:Object,
+				default:()=>{
+					return {}
+				}
 			}
 		},
 		data() {

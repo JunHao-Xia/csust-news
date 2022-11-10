@@ -8,7 +8,7 @@ export default {
 			//用户token
 			token:uni.getStorageSync(TOKEN)||'',
 			//用户
-			userInfo:uni.getStorageSync(USERINFO)|| {},
+			userInfo:uni.getStorageSync(USERINFO) || {},
 		}
 	},
 	getters:{
@@ -21,6 +21,7 @@ export default {
 		//设置相关用户信息
 		SET_USERINFO(state,[token,userInfo]){
 			state.token = token;
+			state.userInfo = userInfo;
 			state.isLogin =true;
 			this.commit('users/TOKEN_LOCATION',token)
 			this.commit('users/USERINFO_LOCATION',userInfo)

@@ -4,6 +4,8 @@ import App from './App'
 import Vue from 'vue'
 import uView from '@/uni_modules/uview-ui'
 import api from '@/http/api/index.js'
+import message from '@/until/message.js'
+Vue.prototype.$msg = message
 Vue.prototype.$api = api;
 import store from './store'
 Vue.use(uView)

@@ -11,7 +11,7 @@ export const getArticleAll=({method,data})=>{
 	});
 }
 //文章添加
-export const addArticle = ({method,data})=>{
+export const addArticle = ({data})=>{
 	return request({
 		url:'/article/add',
 		method:'POST',
@@ -19,7 +19,7 @@ export const addArticle = ({method,data})=>{
 	});
 }
 
-//根据文章标题模糊查询   data:{k,v}
+//查询接口   data:{k,v}
 export const getArticleToContent = ({method,data})=>{
 	return request({
 		url:'article/query',

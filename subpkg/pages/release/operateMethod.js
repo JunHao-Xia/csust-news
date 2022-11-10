@@ -9,7 +9,7 @@ module.exports={
 	},
 	//上传图片
 	uploadImage(){
-		this.onKeyword()
+		uni.hideKeyboard()
 		uni.chooseImage({
 			count:1,
 			sizeType:['original','compressed'],
@@ -31,7 +31,6 @@ module.exports={
 				})
 				uni.hideLoading()
 			}
-			
 		})
 	},
 	//设置粗体

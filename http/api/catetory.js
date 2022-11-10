@@ -5,9 +5,8 @@
 import request from '@/http/request.js'
 
 //获取全部类别
-export const getCategory = ({data})=>{
+export const getCategory = ()=>{
 	return request({
-		url:'/category/add',
-		data
+		url:'/category/query'
 	})
 }
