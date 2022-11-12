@@ -30,24 +30,12 @@
 			};
 		},
 		methods: {
-			clickTabs(e) {
-				let {id} = e;
-				this.findArticleToCategory(id)
-				//当页面被点击，触发页面内容置顶
-				uni.$emit('tabToBackTop');
-			},
 			async getLabel() {
 				let {
 					data
 				} = await this.$api.getCategory();
 				this.labelList = data;
 				this.findArticleToCategory(data[0].id)
-			},
-			// 跳转至subpkg下的search-blog页面
-			toSearchPage() {
-				uni.navigateTo({
-					url: "/subpkg/pages/search-blog/search-blog"
-				})
 			},
 			//根据分类ID查找列表
 			async findArticleToCategory(cID) {
@@ -59,8 +47,22 @@
 				})
 				console.log(data)
 				this.categoryList=data;
-			}
-		},
+			},
+			clickTabs(e) {
+				let {id} = e;
+				this.findArticleToCategory(id)
+				//当页面被点击，触发页面内容置顶
+				uni.$emit('tabToBackTop');
+			},
+			
+			// 跳转至subpkg下的search-blog页面
+			toSearchPage() {
+				uni.navigateTo({
+					url: "/subpkg/pages/search-blog/search-blog"
+				})
+			},
+			
+		}
 
 	}
 </script>

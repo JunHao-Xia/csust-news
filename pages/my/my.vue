@@ -42,7 +42,11 @@
 		},
 		computed:{
 			...mapGetters('users',['isLogin']),
-			...mapState('users',['userInfo'])
+			userInfo(){
+				let userInfo = uni.getStorageSync('userInfo');
+				if(userInfo) return JSON.parse(userInfo);
+				return {}
+			}
 		},
 		methods:{
 			...mapActions('users',['user_logout']),

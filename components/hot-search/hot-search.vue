@@ -16,13 +16,17 @@
 		<u-icon slot="clearIcon" name="close-circle-fill" color="#999999"></u-icon>
 		</uni-search-bar>
 		<!-- 搜索框 -->
-		<view v-else class="hotSearch-container">
+		<view v-else class="hotSearch-container" :style="{
+			height: config.height + 'px',
+			backgroundColor: config.backgroundColor,
+			border: config.border
+		}">
 			<!-- 搜索框内部图标 -->
 			<view class="hotSearch-container__icon">
-				<u-icon color="#767676" name="search" size="20"></u-icon>
+				<u-icon color="#767676" :name="config.icon" size="20"></u-icon>
 			</view>
 			<!-- 搜索框内部文字 -->
-			<view class="hotSearch-container__text">
+			<view class="hotSearch-container__text" :style="{color:config.textColor}">
 				{{placehoderText}}
 			</view>
 		</view>

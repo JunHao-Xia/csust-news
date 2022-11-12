@@ -42,7 +42,6 @@
 		height: 100%;
 		.navList-container__swiper-item{
 			height: 100%;
-			
 		}
 	}
 }
