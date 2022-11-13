@@ -22,14 +22,14 @@ export const addArticle = ({data})=>{
 //查询接口   data:{k,v}
 export const getArticleToContent = ({method,data})=>{
 	return request({
-		url:'article/query',
+		url:'/article/query',
 		data
 	});
 }
 //查询文章详情
 export const getArticleDetail=({data})=>{
 	return request({
-		url:'article/detail',
+		url:'/article/details',
 		data
 	});
 }

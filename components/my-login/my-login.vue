@@ -30,41 +30,10 @@
 			};
 		},
 		methods:{
-			...mapActions('users',['user_login']),
 			//登录
-			async login(){
-				uni.showLoading({
-					title:"加载中"
-				})
-				uni.getUserProfile({
-					lang:'zh_CN',
-					desc:'study',
-					success:({userInfo})=>{
-							uni.login({
-								provider: 'weixin',
-								success:async ({code}) => {
-									let {data} = await this.$api.login({
-										data:{
-											code
-										}
-									})
-									//传递结果以及用户信息
-									this.user_login([data.token,userInfo])
-									this.$emit('successLogin')
-								}
-							})
-					},
-					fail() {
-						uni.showToast({
-							title:"授权失败",
-							icon:'error'
-						})
-					},
-					complete() {
-						uni.hideLoading()
-					}
-				})
-			},
+			login(){
+				this.$emit('login');
+			}
 		}
 	}
 </script>

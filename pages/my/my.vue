@@ -1,6 +1,6 @@
 <template>
 	<view class="my-container">
-		<my-login v-if="!isLogin" ></my-login>
+		<my-login @login = "login" v-if="!isLogin" ></my-login>
 		<view class="logout-container" v-else>
 			<!-- 头像 -->
 			<view class="logout-container__avatar">
@@ -22,12 +22,9 @@
 					<text>收藏</text>
 				</view>
 			</view>
-			
 			<view class="logout-container__btn">
 				<button type="warn" @click="logout">退出登录</button>
 			</view>
-			
-			
 		</view>
 		<tabbar :current='1'></tabbar>
 	</view>
@@ -44,17 +41,53 @@
 			...mapGetters('users',['isLogin']),
 			userInfo(){
 				let userInfo = uni.getStorageSync('userInfo');
-				if(userInfo) return JSON.parse(userInfo);
-				return {}
+				return userInfo || {}
 			}
 		},
 		methods:{
-			...mapActions('users',['user_logout']),
+			...mapActions('users',['user_logout','user_login']),
 
 			//退出登录
 			logout(){
 				this.user_logout()
-			}
+			},
+			
+			//登录
+			async login(){
+				uni.showLoading({
+					title:"加载中"
+				})
+				uni.getUserProfile({
+					lang:'zh_CN',
+					desc:'study',
+					success:({userInfo})=>{
+							uni.login({
+								provider: 'weixin',
+								success:async ({code}) => {
+									let {data} = await this.$api.login({
+										data:{
+											code,
+											nickname: userInfo.nickName, 
+											img: userInfo.avatarUrl
+										}
+									})
+									//传递结果以及用户信息
+									this.user_login([data.token,userInfo])
+									this.$emit('successLogin')
+								}
+							})
+					},
+					fail() {
+						uni.showToast({
+							title:"授权失败",
+							icon:'error'
+						})
+					},
+					complete() {
+						uni.hideLoading()
+					}
+				})
+			},
 	}
 	}
 </script>

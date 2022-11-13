@@ -55,7 +55,7 @@
 		methods:{
 			articleDetail(){
 				uni.navigateTo({
-					url:'/subpkg/pages/article-detail/article-detail'
+					url:'/subpkg/pages/article-detail/article-detail?id='+this.item.id
 				})
 			}
 		}

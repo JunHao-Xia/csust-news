@@ -34,17 +34,11 @@ export default {
 		},
 		//将token持久化
 		TOKEN_LOCATION(state,token){
-			uni.setStorage({
-				key:TOKEN,
-				data:token
-			})
+			uni.setStorageSync(TOKEN,token)
 		},
 		//将userinfo持久化
 		USERINFO_LOCATION(state,userInfo){
-			uni.setStorage({
-				key:USERINFO,
-				data:JSON.stringify(userInfo)
-			})
+			uni.setStorageSync(USERINFO,userInfo)
 		},
 		//将本地token删除
 		TOKEN_CLEAR(state){
