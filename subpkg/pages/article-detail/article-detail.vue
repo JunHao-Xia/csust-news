@@ -24,7 +24,7 @@
 
 				</view>
 				<!-- 关注按钮 -->
-				<button size="mini" type="default" @click="fellow">关注</button>
+				<button size="mini" :type="isFollow?'primary':'default'" @click="follow">{{isFollow?"已关注":"关注"}}</button>
 			</view>
 		</view>
 		<!-- 内容 -->
@@ -38,7 +38,8 @@
 		</view>
 		<!--下方点赞、评论、收藏-->
 		<view class="detail-bottom__menu">
-			<detail-topmenue></detail-topmenue>
+			<detail-topmenue @changeCollect="changeCollect" @changeLike="changeLike" :likeAndCollect="likeAndCollect">
+			</detail-topmenue>
 		</view>
 	</view>
 </template>
@@ -50,26 +51,119 @@
 	} from 'vuex'
 	export default {
 		onLoad(e) {
+			this.id = e.id
 			this.getArticleDetail(e.id)
+			this.isLikeAndCollct()
+			this.isFollows()
 		},
 		data() {
 			return {
-				article_detail:{}
-				};
+				//文章id
+				id: 0,
+				article_detail: {},
+				//是否关注作者
+				isFollow:false,
+				//是否被点赞以及收藏
+				likeAndCollect: {
+					like: false,
+					collect: false
+				}
+			};
 		},
 		computed: {
 			...mapState('systemInfo', ['safeAreaInsets'])
 		},
 		methods: {
+			//点赞按钮被点击
+			async changeLike() {
+				uni.showLoading()
+				//根据点赞按钮状态来触发相对应处理接口
+				this.likeAndCollect.like ?
+					//取消点赞
+					await this.$api.cancelLike({
+						data: {
+							article_id: this.id
+						}
+					}) :
+					//点赞
+					await this.$api.toLike({
+						data: {
+							article_id: this.id
+						}
+					});
+				uni.hideLoading()
+				//点赞
+				this.likeAndCollect.like = !this.likeAndCollect.like;
+				let message = this.likeAndCollect.like ? "点赞成功" : "取消点赞";
+				this.$msg(message)
+			},
+			//收藏按钮被点击
+			async changeCollect() {
+				uni.showLoading()
+				this.likeAndCollect.collect ?
+					//取消收藏
+					await this.$api.cancelCollect({
+						data: {
+							aid: this.id
+						}
+					}) :
+					//收藏
+					await this.$api.toCollect({
+						data: {
+							article_id: this.id
+						}
+					});
+				uni.hideLoading()
+				//收藏
+				this.likeAndCollect.collect = !this.likeAndCollect.collect;
+				let message = this.likeAndCollect.collect ? "收藏成功" : "取消收藏";
+				this.$msg(message)
+			},
 			//查询文章详情
-			async getArticleDetail(id){
-				let {data} = await this.$api.getArticleDetail({
-					data:{id}
+			async getArticleDetail(id) {
+				let {
+					data
+				} = await this.$api.getArticleDetail({
+					data: {
+						id
+					}
 				})
 				this.article_detail = data
 			},
-			fellow() {
-				console.log('关注按钮')
+			//查询文章是否被点赞、收藏
+			async isLikeAndCollct() {
+				let isLike = await this.$api.isLike({
+					data: {
+						id: this.id
+					}
+				});
+				let isCollect = await this.$api.isCollect({
+					data: {
+						aid: this.id
+					}
+				});
+				//将点赞收藏初始状态赋值
+				this.likeAndCollect.like = isLike.data
+				this.likeAndCollect.collect = isCollect.data
+			},
+			//查询用户是否被关注
+			async isFollows(){
+				let {data} = await this.$api.isFollow();
+				let isFollow = data.some(item=>item.follow_id === this.article_detail.user_id);
+				this.isFollow = isFollow;
+			},
+			//关注
+			async follow() {
+				if(this.isFollow){
+					//取消关注
+					await this.$api.cancelFollow({data:{follow_id:this.article_detail.user_id}})
+				}else{
+					//关注
+					await this.$api.toFollow({data:{follow_id:this.article_detail.user_id}})
+				}
+				this.isFollow = !this.isFollow;
+				let msg = this.isFollow?"关注成功":"取消关注";
+				this.$msg(msg)
 			}
 		},
 		components: {
@@ -88,8 +182,8 @@
 			flex-direction: column;
 			padding: $uni-spacing-row-base 0px;
 			box-sizing: border-box;
-		
-	.detaile-title {
+
+			.detaile-title {
 				font-size: 18px;
 				font-weight: bold;
 				color: $uni-text-color-title;

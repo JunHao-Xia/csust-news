@@ -13,16 +13,15 @@
 				}"  
 				></hot-search>
 		</view>
-		
 		<!-- 下菜单右边点赞以及收藏框 -->
 		<view class="menu-right">
 			<!-- 点赞 -->
 			<view class="option-box">
-				<article-menuicon @changeLike = "changeLike"></article-menuicon>
+				<article-menuicon @changeLike = "changeLike" :isLike="likeAndCollect.like"></article-menuicon>
 			</view>
 			<!-- 收藏  -->
 			<view class="option-box">
-				<article-menuicon @changeCollect ="changeCollect" :icontype="collect"></article-menuicon>
+				<article-menuicon @changeCollect ="changeCollect" :icontype="collect"  :isCollect="likeAndCollect.collect"></article-menuicon>
 			</view>
 		</view>
 	</view>
@@ -35,6 +34,10 @@
 				type:String,
 				default:"评论一句，前排打call"
 			},
+			likeAndCollect:{
+				type:Object,
+				require:true
+			}
 		},
 		data() {
 			return {
@@ -42,11 +45,13 @@
 			};
 		},
 		methods:{
+			//传递changLike事件
 			changeLike(){
-				console.log("喜欢按钮")
+				this.$emit('changeLike')
 			},
+			//传递changeCollect事件
 			changeCollect(){
-				console.log("收藏按钮")
+				this.$emit('changeCollect')
 			}
 		}
 	}

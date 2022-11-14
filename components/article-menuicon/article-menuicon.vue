@@ -22,17 +22,25 @@
 			icontype:{
 				type:String,
 				default:'like'
+			},
+			isLike:{
+				type:Boolean,
+				default:false
+			},
+			isCollect:{
+				type:Boolean,
+				default:false
 			}
 		},
 		computed:{
 			likeAction(){
-				if(this.isActive){
+				if(this.isLike){
 					return require('@/static/images/praise.png')
 				}
 				return require('@/static/images/un-praise.png')
 			},
 			collectAction(){
-				if(this.isActive){
+				if(this.isCollect){
 					return require('@/static/images/collect.png')
 				}
 				return require('@/static/images/un-collect.png')

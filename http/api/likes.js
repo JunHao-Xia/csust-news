@@ -9,3 +9,20 @@ export const isLike = ({data})=>{
 		data
 	})
 }
+//点赞
+export const toLike = ({data})=>{
+	return request({
+		url:'/likes/add',
+		method:'POST',
+		data
+	})
+}
+
+//取消点赞
+export const cancelLike = ({data})=>{
+	return request({
+		url:'/likes/del_follow',
+		method:'DELETE',
+		data
+	})
+}
