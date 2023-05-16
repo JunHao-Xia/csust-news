@@ -1,0 +1,42 @@
+page{
+	height: 100%;
+}
+.card{
+	border: 1px solid #f9f9f9;
+	border-radius: 5px;
+	margin: 12px;
+	padding: 12px;
+	box-shadow: $uni-boxShadow-base;
+}
+.climp{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@mixin climpCommon {
+	display:-webkit-box;         //将对象作为弹性伸缩盒子模型显示。
+	-webkit-box-orient:vertical; //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+	overflow:hidden;             //超出部分隐藏
+	text-overflow:ellipsis;      //用一个省略号代替超出的内容
+	
+}
+.climp-1{
+		@include climpCommon;
+		-webkit-line-clamp:1;        //限制行数
+	
+}
+.climp-2{
+		@include climpCommon;
+		-webkit-line-clamp:2;        //限制行数
+	
+}
+.climp-3{
+		@include climpCommon;
+		-webkit-line-clamp:3;        //限制行数
+}
+
+.link{
+	color: #04498c;
+	cursor: pointer;
+}
