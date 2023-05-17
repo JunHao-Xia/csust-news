@@ -2,7 +2,7 @@
 	<view class="videoCard-container" @click="videoDetail">
 		<!-- 视频 -->
 		<view class="video-box">
-			<image src="../../static/images/play_history_3_3.jpg" mode="aspectFit" alt=""/>
+			<image src="../../static/images/play_history_3_3.jpg" mode="aspectFill" alt=""/>
 		</view>
 		<!-- 相关信息 -->
 		<view class="video-info">
@@ -44,7 +44,7 @@
 </script>
 <style lang="scss" scoped>
 	.videoCard-container{
-		padding: 0 15rpx;
+		padding:15rpx;
 		height: 160rpx;
 		box-sizing: border-box;
 		display: flex;

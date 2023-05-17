@@ -45,15 +45,15 @@
 							<text class="baseText">{{list.collect_n}}</text>
 						</view>
 						<!-- 是否开启弹幕 -->
-						<view class="userInfo-danmu" style="margin: 17px 0;" @click.stop="clickDanmu()">
+						<view class="userInfo-danmu" style="margin:0 0 17px 0;" @click.stop="clickDanmu()">
 							<image v-if="!isOpenDanmu" src="@/static/images/index/danmu.png"></image>
 							<image v-else src="@/static/images/index/danmu-select.png"></image>
 						</view>
 						<!-- 4.分享 -->
-						<view @click.stop="share" class="userInfo-share">
+							<button class="userInfo-share" open-type="share">
 							<image src="@/static/images/index/share-fill.png"></image>
 							<text class="baseText">分享</text>
-						</view>
+							</button>
 					</view>
 					<!-- 底部文字 -->
 					<view class="content">
@@ -75,7 +75,7 @@
 
 <script>
 	import userList from '@/mockdata/index.js' //这个是假数据
-	import {mapState} from 'vuex'
+	import {mapState,mapMutations} from 'vuex'
 	export default {
 		props: {
 			dataList: {
@@ -113,6 +113,7 @@
 			};
 		},
 		methods: {
+			...mapMutations('danmu', ['danmuStateSave']),
 			sendDanMu(val){
 				this.danmuValue=""
 				this.$emit('sendDanMu',val)
@@ -130,20 +131,12 @@
 			mpTouchstart() {
 				this.mpstartTime = new Date();
 			},
-			share() {
-				console.log(1);
-				uni.showToast({
-					title: '分享',
-					icon: 'none'
-				})
-			},
 			tapVideoHover({
 				state,
 				like
 			}, event) {
 				this.touchNum++
 				setTimeout(() => {
-
 					if (this.touchNum == 1) {
 						this.$emit('playVideo', state, like)
 					}
@@ -162,7 +155,7 @@
 				this.$emit('cLike', sss, type)
 			},
 			clickDanmu(){
-				this.$emit('clickDanmu')
+				this.danmuStateSave()
 			}
 		},
 		mounted() {
@@ -239,10 +232,11 @@
 
 				.userInfo {
 					position: absolute;
-					bottom: 110px;
+					bottom: 70px;
 					right: 10px;
+					display: flex;
 					flex-direction: column;
-
+					align-items: center;
 					.userAvatar {
 						width: 100rpx;
 						height: 100rpx;
@@ -259,13 +253,14 @@
 					&-danmu{
 						opacity: 0.9;
 						display: flex;
+						background-color: transparent;
 						flex-direction: column;
 						align-items: center;
-
-						image {
-							width: 40px;
-							height: 40px;
+							image {
+								width: 40px;
+								height: 40px;
 						}
+						
 					}
 				}
 			}

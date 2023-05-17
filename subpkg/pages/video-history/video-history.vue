@@ -1,27 +1,24 @@
 <template>
 	<view class="video-container">
-		<view class="video-box" @click="open(index)" v-for="(item,index) in dataList" :key="item._id">
-			<video :loop="true" :muted="list.isplay" :controls="false" :http-cache="true" :page-gesture="false"
-				:show-fullscreen-btn="false" :show-loading="false" :show-center-play-btn="false"
-				:enable-progress-gesture="false"
-				:src="item.src"></video>
-		</view>
-		<uni-popup ref="popup" type="bottom" background-color="#000000">
-			<view class="popupContainer" :style="{height:height+'px',width:width+'px'}">
-				 <view class="popupBox">
-				 	<hot-video ref="videoRef"
-				 	@animationfinish="animationfinish" 
-				 	:dataList="dataList"
-				 	@videoChange="videoChange" 
-				 	:k="k" 
-				 	@playVideo="playVideo"
-				 	@getmpTime="getmpTime"
-				 	@cLike="cLike"
-					></hot-video>
-				 </view>
+		<list-scroll>
+			<view class="video-box">
+				<view class="video-item" @click="open(index)" v-for="(item,index) in dataList" :key="item._id">
+					<video :loop="true" :muted="list.isplay" :controls="false" :http-cache="true" :page-gesture="false"
+						:show-fullscreen-btn="false" :show-loading="false" :show-center-play-btn="false"
+						:enable-progress-gesture="false" :src="item.src"></video>
+				</view>
 			</view>
-		</uni-popup>
-
+			</list-scroll>
+				<uni-popup ref="popup" type="bottom" background-color="#000000">
+					<view class="popupContainer" :style="{height:height+'px',width:width+'px'}">
+						<view class="popupBox">
+							<hot-video ref="videoRef" @animationfinish="animationfinish" :dataList="dataList"
+								@videoChange="videoChange" :k="k" @playVideo="playVideo" @getmpTime="getmpTime"
+								@cLike="cLike">
+							</hot-video>
+						</view>
+					</view>
+				</uni-popup>
 	</view>
 </template>
 
@@ -30,14 +27,14 @@
 	export default {
 		data() {
 			return {
-				isShow:false,
+				isShow: false,
 				dataList: [],
-				width:0,
-				height:0,
+				width: 0,
+				height: 0,
 				k: 0,
 				mptime: 0,
 				changeTimeout: "",
-				videoRef:null,
+				videoRef: null,
 				isClick: false
 			}
 		},
@@ -65,12 +62,12 @@
 				console.log('预加载第' + (p + 1) + '个视频：' + this.dataList[p]._id + '' + p)
 			}
 		},
-		methods:{
-			open(index){
+		methods: {
+			open(index) {
 				this.$refs.popup.open('bottom')
 				this.k = index;
 			},
-			close(){
+			close() {
 				this.$refs.popup.close()
 			},
 			// 滑动到尾部
@@ -96,10 +93,10 @@
 				} else {
 					sss ? video.collect_n -= 1 : video.collect_n += 1;
 				}
-			
+
 			},
 			//播放
-			playVideo(state,like) {
+			playVideo(state, like) {
 				if (state == 'play' || state == 'continue') {
 					this.dataList[this.k].state = 'pause';
 				} else {
@@ -119,18 +116,18 @@
 				}
 			},
 			//获取设备1宽高
-			getPhoneInfo(){
+			getPhoneInfo() {
 				let res = uni.getWindowInfo()
 				this.width = res.windowWidth;
-				this.height = res.windowHeight-res.safeAreaInsets.bottom;
+				this.height = res.windowHeight - res.safeAreaInsets.bottom;
 			},
-			navbarLeft(){
+			navbarLeft() {
 				this.close()
 			}
 		},
 		mounted() {
 			this.getPhoneInfo()
-			
+
 			this.videoRef = this.$refs.videoRef;
 			this.dataList = userList
 		}
@@ -139,28 +136,36 @@
 
 <style lang="scss" scoped>
 	.video-container {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-
+		height: 100%;
+		padding: 10rpx 0 30px 0;
+		box-sizing: border-box;
 		.video-box {
-			width: 250rpx;
-			height: 400rpx;
-			padding: 2px;
-			box-sizing: border-box;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			overflow: hidden;
 
-			video {
-				width: 100%;
-				height: 100%;
+			.video-item {
+				width: 250rpx;
+				height: 400rpx;
+				padding: 2px;
+				box-sizing: border-box;
+
+				video {
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
 	}
-	.popupContainer{
+
+	.popupContainer {
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
 		padding: 0 10rpx;
-		.popupBox{
+
+		.popupBox {
 			flex: 1;
 		}
 	}

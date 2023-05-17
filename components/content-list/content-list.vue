@@ -20,9 +20,7 @@
 	import {
 		getRandomColor
 	} from '../../until/index.js'
-	import {
-		mapMutations
-	} from 'vuex'
+
 	export default {
 		props: {
 			topNavIndex: {
@@ -80,7 +78,6 @@
 			}
 		},
 		methods: {
-			...mapMutations('danmu', ['danmuStateSave']),
 			// 滑动到尾部
 			animationfinish() {
 				if (this.k == this.dataList.length - 1) {
@@ -112,10 +109,7 @@
 					sss ? video.collect_n -= 1 : video.collect_n += 1;
 				}
 			},
-			//开启弹幕
-			clickDanmu() {
-				this.danmuStateSave()
-			},
+				
 			//播放
 			playVideo(state, like) {
 				if (state == 'play' || state == 'continue') {

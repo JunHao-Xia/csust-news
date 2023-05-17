@@ -8,9 +8,11 @@
 				<uni-easyinput v-model="searchContent" prefixIcon="search" @confirm="searchKeyWord" placeholder="搜索用户备注或名字"></uni-easyinput>
 			</view>
 			<view class="total">
-				<text>共收藏文章({{collectArticleCount}}篇)</text>
+				<text v-if="curNow===0">共收藏文章({{collectArticleCount}}篇)</text>
+				<text v-else>共收藏视频({{collectVideoCount}}部)</text>
 			</view>
 		</view>
+		
 		<!-- 收藏文章 -->
 		<view class="collect-content" v-if="curNow===0">
 			<u-swipe-action>
@@ -32,10 +34,20 @@
 				</u-swipe-action-item>
 			</u-swipe-action>
 		</view>
+		<!-- 收藏视频 -->
+		<view class="collect-content" v-else>
+			<list-scroll>
+			<block v-for="item in collectVideoList" :key="item._id">
+				<video-card></video-card>
+			</block>
+			</list-scroll>
+		</view>
+		
 	</view>
 </template>
 
 <script>
+	import userList from '@/mockdata/index.js' //这个是假数据‘
 	export default{
 		data(){
 			return {
@@ -43,12 +55,14 @@
 				curNow:0,
 				//收藏文章列表
 				collectArticleList:[],
+				//收藏视频列表
+				collectVideoList:[],
 				//收藏文章数
 				collectArticleCount:0,
 				//搜索内容
 				searchContent:'',
 				//收藏视频数
-				collectVideoCount:0,
+				collectVideoCount:10,
 				options1: [{
 					text: '取消收藏',
 					style: {
@@ -70,10 +84,16 @@
 			sectionChange(index){
 				this.curNow = index;
 			},
-			async getMyCollectArticle(){
+			async getMyCollectArticleAndVideo(){
 				 let {data} = await this.$api.getOurselfCollect()
+				 this.getMycollectVideo()
 				 this.collectArticleList=data
 				 this.collectArticleCount = data.length;
+			},
+			//获取视频列表
+			getMycollectVideo(){
+				this.collectVideoList = userList;
+				
 			},
 			async clickSwiperBtn({name}){
 				const i = this.collectArticleList.findIndex((obj)=>(obj.article_id==name));
@@ -91,7 +111,7 @@
 			}
 		},
 		mounted() {
-			this.getMyCollectArticle()
+			this.getMyCollectArticleAndVideo()
 		}
 	}
 </script>
@@ -116,6 +136,7 @@
 			}
 		}	
 		.collect-content {
+			overflow: hidden;
 			flex: 1;
 			.u-demo-block__title {
 				padding: 10px 0 2px 15px;

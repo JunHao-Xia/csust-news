@@ -2,7 +2,8 @@
 	<view class="videoContainer">
 		<view class="video-box">
 			<view class="video-item" @click.stop="tapVideoHover($event)">
-				<video :id="video_detail._id" :loop="true" :muted="video_detail.isplay" :controls="false"
+				<video :id="video_detail._id" :danmu-list="danmuList" :danmu-btn="isOpenDanmu"
+					:enableDanmu="isOpenDanmu" :loop="true" :muted="video_detail.isplay" :controls="false"
 					:http-cache="true" :page-gesture="false" :show-fullscreen-btn="false" :show-loading="false"
 					:show-center-play-btn="false" :enable-progress-gesture="false" :src="video_detail.src"
 					style="width: 100%;height:100%; background-color: #000000; z-index: -1;"></video>
@@ -25,21 +26,21 @@
 						:class="{'likeNumActive':this.video_detail.like}">{{video_detail.like_n}}</text>
 				</view>
 				<!-- 3.收藏 -->
-				<view class="userInfo-collect" @click.stop="cLike('collect')"
-					style="margin: 17px 0;">
+				<view class="userInfo-collect" @click.stop="cLike('collect')" style="margin: 17px 0;">
 					<image v-if="video_detail.collect" src="@/static/images/index/collect.png"></image>
 					<image v-if="!video_detail.collect" src="@/static/images/index/collect2.png"></image>
 					<text class="baseText">{{video_detail.collect_n}}</text>
 				</view>
 				<!-- 是否开启弹幕 -->
 				<view class="userInfo-danmu" style="margin: 17px 0;" @click.stop="clickDanmu()">
-					<image src="@/static/images/index/danmu.png"></image>
+					<image v-if="!isOpenDanmu" src="@/static/images/index/danmu.png"></image>
+					<image v-else src="@/static/images/index/danmu-select.png"></image>
 				</view>
 				<!-- 4.分享 -->
-				<view @click.stop="share" class="userInfo-share">
-					<image src="@/static/images/index/share-fill.png"></image>
-					<text class="baseText">分享</text>
-				</view>
+				<button class="userInfo-share" open-type="share">
+				<image src="@/static/images/index/share-fill.png"></image>
+				<text class="baseText">分享</text>
+				</button>
 			</view>
 			<!-- 底部文字 -->
 			<view class="content">
@@ -47,11 +48,11 @@
 				<!-- i={{i}} -->
 				<text class="words" style="width:100%;">{{video_detail.msg}}</text>
 				<!-- k={{k}} -->
-				<!-- 	<view class="danmuInput" v-if="danmuConfig.danmuBtn">
-						<u-input :customStyle="{
+				<view class="danmuInput" v-if="isOpenDanmu">
+					<u-input :customStyle="{
 							padding:'3px 6px'
 						}" placeholder="输入即可发送弹幕哦" fontSize="10px" shape="circle" color="#fff"></u-input>
-					</view> -->
+				</view>
 			</view>
 		</view>
 		<!-- 底部适配安全距离 -->
@@ -61,18 +62,30 @@
 
 <script>
 	import userList from '@/mockdata/index.js' //这个是假数据
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex'
 	export default {
 		data() {
 			return {
 				video_detail: {},
 				safeArea: 0,
-				touchNum: 0
+				touchNum: 0,
+				danmuList:[]
 			};
 		},
+		computed: {
+			...mapState('danmu', ['isOpenDanmu'])
+		},
 		methods: {
+			...mapMutations('danmu', ['danmuStateSave']),
 			getVideoDetail(id) {
 				const [videoObj] = userList.filter(item => item._id === id);
 				this.video_detail = videoObj;
+			},
+			clickDanmu(){
+				this.danmuStateSave()
 			},
 			getSystemInfo() {
 				const {
@@ -81,7 +94,10 @@
 				this.safeArea = safeArea.top
 			},
 			tapVideoHover(event) {
-				const {state,like} = this.video_detail;
+				const {
+					state,
+					like
+				} = this.video_detail;
 				this.touchNum++
 				setTimeout(() => {
 					if (this.touchNum == 1) {
@@ -95,7 +111,7 @@
 				}, 250)
 
 			},
-			playVideo(state){
+			playVideo(state) {
 				if (state == 'play' || state == 'continue') {
 					this.video_detail.state = 'pause';
 				} else {
@@ -113,7 +129,7 @@
 				}
 			},
 			cLike(type) {
-				let sss = this.video_detail[type] ;
+				let sss = this.video_detail[type];
 				this.video_detail[type] = !this.video_detail[type]
 				const video = this.video_detail;
 				if (type === 'like') {
@@ -215,6 +231,7 @@
 				&-danmu {
 					opacity: 0.9;
 					display: flex;
+					background-color: transparent;
 					flex-direction: column;
 					align-items: center;
 
@@ -225,10 +242,12 @@
 				}
 			}
 		}
-		.btmSafeArea{
+
+		.btmSafeArea {
 			background-color: #000;
 		}
 	}
+
 	.baseText {
 		color: #FFFFFF;
 		font-size: 14px;
